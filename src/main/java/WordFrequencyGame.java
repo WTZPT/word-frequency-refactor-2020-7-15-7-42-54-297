@@ -9,7 +9,6 @@ public class WordFrequencyGame {
 
     public String getResult(String sentence) {
 
-
         if (sentence.split(BLANK_REGEX).length == 1) {
             return sentence + " 1";
         } else {
@@ -46,13 +45,17 @@ public class WordFrequencyGame {
 
         Map<String, List<WordInfo>> wordToWordInfo = getListMap(wordInfoList);
 
-        List<WordInfo> list = new ArrayList<>();
+        wordInfoList = calculateWordInfo(wordToWordInfo);
+        wordInfoList.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
+        return wordInfoList;
+    }
+
+    private List<WordInfo> calculateWordInfo(Map<String, List<WordInfo>> wordToWordInfo) {
+        List<WordInfo> wordInfoList = new ArrayList<>();
         for (Map.Entry<String, List<WordInfo>> entry : wordToWordInfo.entrySet()) {
             WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
-            list.add(wordInfo);
+            wordInfoList.add(wordInfo);
         }
-        wordInfoList = list;
-        wordInfoList.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
         return wordInfoList;
     }
 
