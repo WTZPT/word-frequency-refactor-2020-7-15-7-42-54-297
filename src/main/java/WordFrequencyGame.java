@@ -7,16 +7,16 @@ public class WordFrequencyGame {
     public static final String CALCULATE_ERROR = "Calculate Error";
     public static final String STRING = " ";
 
-    public String getResult(String inputStr) {
+    public String getResult(String sentence) {
 
 
-        if (inputStr.split(BLANK_REGEX).length == 1) {
-            return inputStr + " 1";
+        if (sentence.split(BLANK_REGEX).length == 1) {
+            return sentence + " 1";
         } else {
 
             try {
 
-                String[] arr = inputStr.split(BLANK_REGEX);
+                String[] arr = sentence.split(BLANK_REGEX);
 
                 List<Input> inputList = new ArrayList<>();
                 for (String s : arr) {
