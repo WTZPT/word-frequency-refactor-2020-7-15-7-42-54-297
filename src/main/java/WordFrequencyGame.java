@@ -16,27 +16,12 @@ public class WordFrequencyGame {
 
             try {
 
-                String[] words = sentence.split(BLANK_REGEX);
+                List<WordInfo> wordInfoList = getWordInfoList(sentence);
 
-                List<WordInfo> wordInfos = new ArrayList<>();
-                for (String s : words) {
-                    WordInfo wordInfo = new WordInfo(s, 1);
-                    wordInfos.add(wordInfo);
-                }
-
-                Map<String, List<WordInfo>> wordToWordInfo = getListMap(wordInfos);
-
-                List<WordInfo> list = new ArrayList<>();
-                for (Map.Entry<String, List<WordInfo>> entry : wordToWordInfo.entrySet()) {
-                    WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
-                    list.add(wordInfo);
-                }
-                wordInfos = list;
-
-                wordInfos.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
+                wordInfoList.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
 
                 StringJoiner joiner = new StringJoiner(DELIMITER);
-                for (WordInfo w : wordInfos) {
+                for (WordInfo w : wordInfoList) {
                     String s = w.getValue() + STRING + w.getWordCount();
                     joiner.add(s);
                 }
@@ -45,6 +30,27 @@ public class WordFrequencyGame {
                 return CALCULATE_ERROR;
             }
         }
+    }
+
+ 
+    private List<WordInfo> getWordInfoList(String sentence) {
+        String[] words = sentence.split(BLANK_REGEX);
+
+        List<WordInfo> wordInfoList = new ArrayList<>();
+        for (String s : words) {
+            WordInfo wordInfo = new WordInfo(s, 1);
+            wordInfoList.add(wordInfo);
+        }
+
+        Map<String, List<WordInfo>> wordToWordInfo = getListMap(wordInfoList);
+
+        List<WordInfo> list = new ArrayList<>();
+        for (Map.Entry<String, List<WordInfo>> entry : wordToWordInfo.entrySet()) {
+            WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
+            list.add(wordInfo);
+        }
+        wordInfoList = list;
+        return wordInfoList;
     }
 
     private Map<String, List<WordInfo>> getListMap(List<WordInfo> wordInfoList) {
